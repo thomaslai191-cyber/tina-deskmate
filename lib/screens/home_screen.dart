@@ -7,10 +7,7 @@
 /// - 語音輸入 / 文字輸入
 /// - 對話歷史
 
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import '../models/deskmate_controller.dart';
 import '../models/deskmate_state.dart';
 import '../widgets/tina_face_widget.dart';
@@ -128,7 +125,6 @@ class HomeScreen extends StatelessWidget {
         label = '連線失敗';
         break;
       case AppConnectionState.disconnected:
-      default:
         bgColor = Colors.grey;
         label = '未連線';
     }

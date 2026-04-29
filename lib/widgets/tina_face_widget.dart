@@ -4,7 +4,6 @@
 /// 動畫過渡不同情緒
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../models/deskmate_state.dart';
 
 class TinaFaceWidget extends StatelessWidget {

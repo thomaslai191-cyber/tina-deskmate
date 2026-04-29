@@ -2,10 +2,7 @@
 /// GetX 狀態管理，協調所有服務
 
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/deskmate_state.dart';
