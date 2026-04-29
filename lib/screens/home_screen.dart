@@ -593,7 +593,7 @@ class SettingsScreen extends StatelessWidget {
             activeColor: Color(0xFF6C63FF),
             onChanged: (v) {
               ctrl.autoConnect.value = v;
-              ctrl._saveSettings();
+              ctrl.saveSettings();
             },
           )),
           Divider(color: Colors.white12, height: 30),
@@ -660,7 +660,7 @@ class SettingsScreen extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             ctrl.serverHost.value = tc.text;
-            ctrl._saveSettings();
+            ctrl.saveSettings();
             Get.back();
           },
           child: Text('儲存'),
@@ -688,7 +688,7 @@ class SettingsScreen extends StatelessWidget {
             final port = int.tryParse(tc.text);
             if (port != null) {
               ctrl.serverPort.value = port;
-              ctrl._saveSettings();
+              ctrl.saveSettings();
             }
             Get.back();
           },
@@ -724,7 +724,7 @@ class SettingsScreen extends StatelessWidget {
             final fps = int.tryParse(tc.text);
             if (fps != null && fps >= 1 && fps <= 30) {
               ctrl.streamFps.value = fps;
-              ctrl._saveSettings();
+              ctrl.saveSettings();
             }
             Get.back();
           },

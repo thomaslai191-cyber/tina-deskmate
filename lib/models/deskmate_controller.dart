@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +20,7 @@ class DeskMateController extends GetxController {
   final TtsService ttsService = TtsService();
 
   // ── 反應式狀態 ──
-  final connectionState = ConnectionState.disconnected.obs;
+  final connectionState = AppConnectionState.disconnected.obs;
   final currentFace = TinaFace.idle.obs;
   final serverStatus = Rxn<ServerStatus>();
   final isStreaming = false.obs;
@@ -71,7 +72,7 @@ class DeskMateController extends GetxController {
     }
   }
 
-  Future<void> _saveSettings() async {
+  Future<void> saveSettings() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('server_host', serverHost.value);
@@ -87,13 +88,13 @@ class DeskMateController extends GetxController {
   void _setupCallbacks() {
     wsService.onConnectionChange = (state) {
       connectionState.value = state;
-      if (state == ConnectionState.connected) {
+      if (state == AppConnectionState.connected) {
         currentFace.value = TinaFace.happy;
         statusMessage.value = '已連線到 PC 💻';
-      } else if (state == ConnectionState.disconnected) {
+      } else if (state == AppConnectionState.disconnected) {
         currentFace.value = TinaFace.idle;
         statusMessage.value = '未連線';
-      } else if (state == ConnectionState.connecting) {
+      } else if (state == AppConnectionState.connecting) {
         currentFace.value = TinaFace.thinking;
         statusMessage.value = '連線中...';
       } else {
@@ -146,7 +147,7 @@ class DeskMateController extends GetxController {
     );
 
     if (success) {
-      await _saveSettings();
+      await saveSettings();
 
       // 自動啟動相機串流
       await initCamera();
@@ -239,17 +240,17 @@ class DeskMateController extends GetxController {
   }
 
   // ── 輔助 ──
-  bool get isConnected => connectionState.value == ConnectionState.connected;
+  bool get isConnected => connectionState.value == AppConnectionState.connected;
 
   String get connectionLabel {
     switch (connectionState.value) {
-      case ConnectionState.disconnected:
+      case AppConnectionState.disconnected:
         return '未連線';
-      case ConnectionState.connecting:
+      case AppConnectionState.connecting:
         return '連線中...';
-      case ConnectionState.connected:
+      case AppConnectionState.connected:
         return '已連線';
-      case ConnectionState.error:
+      case AppConnectionState.error:
         return '連線錯誤';
     }
   }

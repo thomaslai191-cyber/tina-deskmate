@@ -94,8 +94,7 @@ class CameraService {
         );
         final frameInfo = await codec.getNextFrame();
         final byteData = await frameInfo.image.toByteData(
-          format: ui.ImageByteFormat.jpeg,
-          quality: 60,
+          format: ui.ImageByteFormat.png,
         );
         if (byteData != null) {
           compressed = byteData.buffer.asUint8List();

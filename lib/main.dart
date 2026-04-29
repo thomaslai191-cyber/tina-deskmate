@@ -30,6 +30,7 @@ class TinaDeskMateApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Tina DeskMate',
       debugShowCheckedModeBanner: false,
+      defaultTransition: Transition.fadeIn,
       theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: const Color(0xFF6C63FF),
@@ -44,8 +45,6 @@ class TinaDeskMateApp extends StatelessWidget {
           bodyLarge: TextStyle(color: Colors.white),
           bodyMedium: TextStyle(color: Colors.white70),
         ),
-        // 全域 GetX 預設
-        defaultTransition: Transition.fadeIn,
       ),
       home: HomeScreen(),
     );
