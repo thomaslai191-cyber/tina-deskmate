@@ -32,7 +32,16 @@ jobs:
         run: flutter analyze --no-pub --no-fatal-infos
 
       - name: Build APK
-        run: flutter build apk --debug --verbose 2>&1 | grep -E "v1|embedding|ERROR|error|FAIL" | head -20 || flutter build apk --debug
+        run: |
+          set +e
+          flutter build apk --debug 2>&1
+          EXIT_CODE=$?
+          echo "BUILD_EXIT_CODE=$EXIT_CODE"
+          if [ $EXIT_CODE -ne 0 ]; then
+            # Retry with verbose to get full error context
+            flutter build apk --debug --verbose 2>&1 | head -200
+          fi
+          exit $EXIT_CODE
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
