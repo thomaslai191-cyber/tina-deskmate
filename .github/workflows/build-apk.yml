@@ -1,0 +1,42 @@
+name: Build APK
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29'
+          channel: 'stable'
+          cache: true
+
+      - name: Create missing asset directories
+        run: |
+          mkdir -p assets/faces assets/sounds
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --no-pub
+
+      - name: Build APK
+        run: flutter build apk --debug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: tina-deskmate-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 14
