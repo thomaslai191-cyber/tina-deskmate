@@ -1,0 +1,27 @@
+{
+  "name": "Tina DeskMate",
+  "version": "1.0.0",
+  "description": "桌面 AI 助手 — 舊手機變身智慧桌面伴侶",
+  "server": {
+    "host": "PC_IP_ADDRESS",
+    "ws_port": 8765,
+    "http_port": 8080
+  },
+  "features": {
+    "camera_stream": true,
+    "face_display": true,
+    "tts": true,
+    "voice_input": true,
+    "screen_mirror": false
+  },
+  "faces": {
+    "idle": "😊",
+    "happy": "😄",
+    "thinking": "🤔",
+    "listening": "👂",
+    "working": "💪",
+    "error": "😅",
+    "wave": "👋",
+    "love": "❤️"
+  }
+}
