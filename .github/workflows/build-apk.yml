@@ -32,7 +32,7 @@ jobs:
         run: flutter analyze --no-pub --no-fatal-infos
 
       - name: Build APK
-        run: flutter build apk --debug
+        run: flutter build apk --debug --verbose 2>&1 | grep -E "v1|embedding|ERROR|error|FAIL" | head -20 || flutter build apk --debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
