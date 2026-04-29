@@ -7,6 +7,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
@@ -87,13 +88,13 @@ class CameraService {
       Uint8List compressed = bytes;
       if (bytes.length > 200 * 1024) {
         // 用 Flutter 的 decodeImage 壓縮
-        final codec = await instantiateImageCodec(bytes,
+        final codec = await ui.instantiateImageCodec(bytes,
           targetWidth: 640,
           targetHeight: 480,
         );
         final frameInfo = await codec.getNextFrame();
         final byteData = await frameInfo.image.toByteData(
-          format: ImageByteFormat.jpeg,
+          format: ui.ImageByteFormat.jpeg,
           quality: 60,
         );
         if (byteData != null) {

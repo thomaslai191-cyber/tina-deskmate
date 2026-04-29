@@ -9,7 +9,6 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../models/deskmate_state.dart';
 
@@ -29,7 +28,7 @@ class WebSocketService {
   // 回調
   Function(ServerStatus)? onStatusUpdate;
   Function(String)? onVisionAnalysis;
-  Function(ConnectionState)? onConnectionChange;
+  Function(AppConnectionState)? onConnectionChange;
   Function(String)? onError;
 
   /// 連線到 PC 伺服器
@@ -40,7 +39,7 @@ class WebSocketService {
     _port = port;
     _reconnectAttempts = 0;
 
-    onConnectionChange?.call(ConnectionState.connecting);
+    onConnectionChange?.call(AppConnectionState.connecting);
 
     try {
       final uri = Uri.parse('ws://$host:$port');
@@ -51,7 +50,7 @@ class WebSocketService {
 
       _isConnected = true;
       _reconnectAttempts = 0;
-      onConnectionChange?.call(ConnectionState.connected);
+      onConnectionChange?.call(AppConnectionState.connected);
 
       // 註冊為手機設備
       _send({
@@ -67,13 +66,13 @@ class WebSocketService {
         _onMessage,
         onError: (error) {
           _isConnected = false;
-          onConnectionChange?.call(ConnectionState.error);
+          onConnectionChange?.call(AppConnectionState.error);
           onError?.call('WS 錯誤: $error');
           _scheduleReconnect();
         },
         onDone: () {
           _isConnected = false;
-          onConnectionChange?.call(ConnectionState.disconnected);
+          onConnectionChange?.call(AppConnectionState.disconnected);
           _scheduleReconnect();
         },
       );
@@ -81,7 +80,7 @@ class WebSocketService {
       return true;
     } catch (e) {
       _isConnected = false;
-      onConnectionChange?.call(ConnectionState.error);
+      onConnectionChange?.call(AppConnectionState.error);
       onError?.call('連線失敗: $e');
       _scheduleReconnect();
       return false;
@@ -96,7 +95,7 @@ class WebSocketService {
     await _channel?.sink.close();
     _channel = null;
     _isConnected = false;
-    onConnectionChange?.call(ConnectionState.disconnected);
+    onConnectionChange?.call(AppConnectionState.disconnected);
   }
 
   /// 發送相機幀
@@ -233,7 +232,7 @@ class WebSocketService {
     final delay = (_reconnectAttempts * 2).clamp(1, 30);
 
     print('🔄 ${_reconnectAttempts}/${_maxReconnectAttempts} 次重連，${delay}秒後...');
-    onConnectionChange?.call(ConnectionState.connecting);
+    onConnectionChange?.call(AppConnectionState.connecting);
 
     _reconnectTimer = Timer(Duration(seconds: delay), () {
       connect(_host, port: _port);

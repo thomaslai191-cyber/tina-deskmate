@@ -115,19 +115,19 @@ class HomeScreen extends StatelessWidget {
     String label;
     
     switch (state) {
-      case ConnectionState.connected:
+      case AppConnectionState.connected:
         bgColor = Colors.green;
         label = '已連線到 PC';
         break;
-      case ConnectionState.connecting:
+      case AppConnectionState.connecting:
         bgColor = Colors.orange;
         label = '連線中...';
         break;
-      case ConnectionState.error:
+      case AppConnectionState.error:
         bgColor = Colors.red;
         label = '連線失敗';
         break;
-      case ConnectionState.disconnected:
+      case AppConnectionState.disconnected:
       default:
         bgColor = Colors.grey;
         label = '未連線';
@@ -148,7 +148,7 @@ class HomeScreen extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: bgColor,
-              boxShadow: state == ConnectionState.connected
+              boxShadow: state == AppConnectionState.connected
                   ? [BoxShadow(color: bgColor, blurRadius: 8)]
                   : null,
             ),

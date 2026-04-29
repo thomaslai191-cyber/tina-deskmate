@@ -86,7 +86,7 @@ class ServerStatus {
 }
 
 /// 連線狀態
-enum ConnectionState {
+enum AppConnectionState {
   disconnected,
   connecting,
   connected,

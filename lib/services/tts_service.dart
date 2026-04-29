@@ -67,9 +67,6 @@ class TtsService {
 
   Future<void> dispose() async {
     await stop();
-    await _tts.setStartHandler(null);
-    await _tts.setCompletionHandler(null);
-    await _tts.setErrorHandler(null);
   }
 
   bool get isSpeaking => _isSpeaking;
