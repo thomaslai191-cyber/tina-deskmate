@@ -8,6 +8,8 @@
 /// - 對話歷史
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import '../models/deskmate_controller.dart';
 import '../models/deskmate_state.dart';
 import '../widgets/tina_face_widget.dart';
